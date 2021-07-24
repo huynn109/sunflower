@@ -20,8 +20,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.samples.apps.sunflower.data.GardenPlantingRepository
 import com.google.samples.apps.sunflower.data.PlantAndGardenPlantings
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GardenPlantingListViewModel internal constructor(
+@HiltViewModel
+class GardenPlantingListViewModel @Inject constructor(
     gardenPlantingRepository: GardenPlantingRepository
 ) : ViewModel() {
     val plantAndGardenPlantings: LiveData<List<PlantAndGardenPlantings>> =

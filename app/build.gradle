@@ -19,6 +19,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -30,6 +31,14 @@ android {
         versionCode 1
         versionName "0.1.6"
         vectorDrawables.useSupportLibrary true
+
+        // Consult the README on instructions for setting up Unsplash API key
+        buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"" + getUnsplashAccess() + "\"")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
     }
     buildTypes {
         release {
@@ -82,6 +91,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
 
     // Compose
     implementation "androidx.activity:activity-compose:$rootProject.activityComposeVersion"
@@ -98,6 +111,10 @@ dependencies {
     implementation "com.google.android.material:compose-theme-adapter:$rootProject.composeVersion"
     implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
     implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"
+    implementation "com.google.accompanist:accompanist-pager:$rootProject.accompanistVersion"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
@@ -110,4 +127,8 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.composeVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+}
+
+def getUnsplashAccess() {
+    return project.findProperty("unsplash_access_key")
 }

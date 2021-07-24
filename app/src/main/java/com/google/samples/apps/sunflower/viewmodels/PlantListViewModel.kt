@@ -24,11 +24,14 @@ import androidx.lifecycle.switchMap
 import com.google.samples.apps.sunflower.PlantListFragment
 import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.data.PlantRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * The ViewModel for [PlantListFragment].
  */
-class PlantListViewModel internal constructor(
+@HiltViewModel
+class PlantListViewModel @Inject constructor(
     plantRepository: PlantRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
